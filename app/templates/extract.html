@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css">
 </head>
 <body>
-    <div id="videoContainer" style="display: none;">
+    <div id="navigation">
+        <a href="logged_index.html" class="nav-link">Page 1</a>
+    </div>
+
+    <div id="videoContainer">
         <video id="cropperVideo" width="400" controls></video>
         <div id="slider"></div>
         <div id="values">Selected range: <span id="value1"></span> - <span id="value2"></span></div>
@@ -114,6 +118,22 @@
             date.setSeconds(seconds);
             return date.toISOString().substr(11, 8);
         }
+        document.addEventListener('DOMContentLoaded', function () {
+    var navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение ссылки
+
+            var targetPage = this.getAttribute('href');
+            navigateToPage(targetPage);
+        });
+    });
+
+    function navigateToPage(page) {
+        window.location.href = page;
+    }
+});
     </script>
 </body>
 </html>

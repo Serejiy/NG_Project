@@ -5,6 +5,23 @@ body {
     padding: 0;
 }
 
+#navigation {
+    margin: 10px;
+}
+
+.nav-link {
+    margin-right: 10px;
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: #2980b9;
+}
+
 .container {
     max-width: 800px;
     margin: 50px auto;
@@ -56,6 +73,7 @@ body {
 }
 
 video {
+    margin-top: 100px;
     margin-left: 25%;
     width: 50%;
     height: auto;

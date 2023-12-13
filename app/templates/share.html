@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Audio</title>
+    <link rel="stylesheet" href="static/share_audio.css">
+</head>
+
+<body>
+    <header>
+        <h1>Share Your Audio</h1>
+    </header>
+
+    <section>
+        <h2>Your Melodies</h2>
+        <ul>
+            {% for melody in melodies %}
+            <li>
+                <strong>{{ melody.title }}</strong>
+                <p>{{ melody.description }}</p>
+                <audio controls>
+                    <source src="{{ url_for('static', filename='melodies/' + melody.filename) }}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <a href="/" class="back-button">Back to Home</a>
+    </section>
+
+</body>
+
+</html>
