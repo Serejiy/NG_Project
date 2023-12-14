@@ -1,15 +1,34 @@
 from app import app
+from app import db
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from app.models import User, AudioFile
-from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/register')
-def register():
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # Проверяем, существует ли пользователь с таким именем
+        existing_user = User.query.filter_by(username=username).first()
+
+        if existing_user:
+            flash('Username is already taken. Please choose another one.', 'error')
+        else:
+            hashed_password = generate_password_hash(password, method='sha256')
+            new_user = User(username=username, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
+
+            flash('Registration successful! You can now log in.', 'success')
+            return redirect(url_for('login'))
+
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -50,6 +69,5 @@ def logout():
 @app.route('/profile')
 @login_required
 def profile():
-    # Получение сохраненных аудиофайлов текущего пользователя
     audio_files = AudioFile.query.filter_by(user_id=current_user.id).all()
     return render_template('profile.html', user=current_user, audio_files=audio_files)
