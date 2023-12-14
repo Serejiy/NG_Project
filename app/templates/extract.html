@@ -18,6 +18,7 @@
         <div id="values">Selected range: <span id="value1"></span> - <span id="value2"></span></div>
         <button id="cropBtn" class="label">Crop Video</button>
         <a id="downloadLink" style="display: none;">Download Cropped Audio</a>
+        <button id="saveToDashboardBtn" class="label">Save to the Dashboard</button>
     </div>
 
     <div id="input_file_container">
@@ -36,6 +37,7 @@
         var value1 = document.getElementById('value1');
         var value2 = document.getElementById('value2');
         var cropBtn = document.getElementById('cropBtn');
+        var saveToDashboardBtn = document.getElementById('saveToDashboardBtn');
         var downloadLink = document.getElementById('downloadLink');
 
         videoInput.addEventListener('change', function (event) {
@@ -86,6 +88,13 @@
             await cropVideo(startTime, endTime, videoInput.files[0]);
         });
 
+        saveToDashboardBtn.addEventListener('click', function () {
+            var startTime = slider.noUiSlider.get()[0];
+            var endTime = slider.noUiSlider.get()[1];
+
+            saveToDashboard(startTime, endTime, videoInput.files[0]);
+        });
+
         async function cropVideo(startTime, endTime, videoFile) {
             var formData = new FormData();
             formData.append('start_time', startTime);
@@ -113,27 +122,34 @@
             }
         }
 
+        async function saveToDashboard(startTime, endTime, videoFile) {
+            var formData = new FormData();
+            formData.append('start_time', startTime);
+            formData.append('end_time', endTime);
+            formData.append('video', videoFile);
+
+            try {
+                var response = await fetch('/save_to_dashboard', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // Обработка успешного ответа (если необходимо)
+                    console.log('Audio saved to the dashboard successfully.');
+                } else {
+                    console.error('Server response was not OK:', response);
+                }
+            } catch (error) {
+                console.error('Error during fetch:', error);
+            }
+        }
+
         function toTimeString(seconds) {
             var date = new Date(null);
             date.setSeconds(seconds);
             return date.toISOString().substr(11, 8);
         }
-        document.addEventListener('DOMContentLoaded', function () {
-    var navLinks = document.querySelectorAll('.nav-link');
-
-    navLinks.forEach(function (link) {
-        link.addEventListener('click', function (event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение ссылки
-
-            var targetPage = this.getAttribute('href');
-            navigateToPage(targetPage);
-        });
-    });
-
-    function navigateToPage(page) {
-        window.location.href = page;
-    }
-});
     </script>
 </body>
 </html>
