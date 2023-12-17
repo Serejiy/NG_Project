@@ -1,0 +1,61 @@
+/* static/styles/profile.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #181818;
+    color: #fff;
+}
+
+.profile-container {
+    max-width: 800px; /* Увеличил максимальную ширину для лучшего отображения */
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #282828;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.profile-header {
+    margin-bottom: 40px;
+}
+
+.profile-header img {
+    width: 150px; /* Увеличил размер изображения для лучшего отображения */
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    font-size: 28px; /* Увеличил размер шрифта заголовка */
+}
+
+.profile-content h2 {
+    font-size: 20px; /* Увеличил размер шрифта подзаголовка */
+    margin-bottom: 20px;
+}
+
+.profile-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.profile-content li {
+    background-color: #333;
+    padding: 20px; /* Увеличил внутренний отступ для лучшего отображения */
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.profile-footer a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-footer a:hover {
+    text-decoration: underline;
+}
