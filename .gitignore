@@ -1,5 +1,6 @@
 # .gitignore
 venv/
+audio_storage/
 __pycache__/
 *.pyc
 *.pyo
