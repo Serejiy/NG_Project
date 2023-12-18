@@ -4,7 +4,7 @@ import tempfile
 import uuid
 from werkzeug.utils import secure_filename
 from moviepy.editor import VideoFileClip
-from flask import render_template, redirect, url_for, request, flash, jsonify, send_file,session
+from flask import render_template, redirect, url_for, request, flash, jsonify, send_file,session,abort
 from flask_login import login_user, login_required, logout_user, current_user
 from app.models import User, AudioFile
 
@@ -150,19 +150,23 @@ def profile():
 def profile_settings():
     return render_template('profile_settings.html')
 
-@app.route('/listen_audio/<filename>')
-def listen_audio(filename):
-    # Для примера, используем сессию как уникальный идентификатор пользователя
-    user_id = session.get('user_id', str(uuid.uuid4()))
-    session['user_id'] = user_id
-    
-    return render_template('listen_audio.html', filename=filename, user_id=user_id)
+@app.route('/listen_audio/<user_id>/<filename>')
+def listen_audio(user_id, filename):
+    return render_template('listen_audio.html', user_id=user_id, filename=filename)
 
 @app.route('/audio_storage/<user_id>/<filename>')
 def serve_audio(user_id, filename):
-    user_audio_path = os.path.join(app.root_path, 'audio_storage', user_id, filename)
-    return app.send_static_file(user_audio_path)
+    user_audio_path = os.path.join('audio_storage', str(user_id), filename)
+    user_audio_path = os.path.abspath(user_audio_path)
+
+
+    if os.path.exists(user_audio_path):
+        print(f'file exist')
+        return send_file(user_audio_path, as_attachment=True)
+    else:
+        abort(404)
 
 @app.route('/share_audio/<filename>')
 def share_audio(filename):
     return render_template('share_audio.html', filename=filename)
+

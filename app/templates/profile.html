@@ -18,8 +18,8 @@
                 {% for audio_file in audio_files %}
                     <li>
                         {{ audio_file.filename }}
-                        - <a href="{{ url_for('listen_audio', filename=audio_file.filename) }}">Listen</a>
-                        - <a href="{{ url_for('share_audio', filename=audio_file.filename) }}">Share</a>
+                        - <a href="{{ url_for('listen_audio',user_id=current_user.id, filename=audio_file.filename) }}">Listen</a>
+                        - <a href="{{ url_for('share_audio',user_id=current_user.id, filename=audio_file.filename) }}">Share</a>
                     </li>
                 {% endfor %}
             </ul>

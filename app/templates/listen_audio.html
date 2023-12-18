@@ -24,9 +24,8 @@
 <body>
     <h1>Listening to {{ filename }}</h1>
     <audio controls>
-        <!-- Используйте прямой путь к файлу, так как ваш файл не является статическим -->
-        <source src="/audio_storage/{{ filename }}" type="audio/mp3">
-        Your browser does not support the audio element.
+        <source src="{{ url_for('serve_audio', user_id=user_id, filename=filename) }}" type="audio/mp3">
+        
     </audio>
 </body>
 </html>
