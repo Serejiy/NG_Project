@@ -66,7 +66,6 @@ def login():
             user = User.query.filter_by(username=username).first()
 
             if user:
-                # Пользователь найден, проверяем пароль
                 if bcrypt.check_password_hash(user.password, password):
                     
                     login_user(user)
@@ -100,32 +99,26 @@ def crop():
         end_time = float(request.form.get('end_time'))
         video_file = request.files['video']
         user_filename = request.form.get('filename', 'output')
-        action = request.form.get('action', 'download')  # По умолчанию download
-
-        # Ensure the user has a directory in the audio storage
+        action = request.form.get('action', 'download')  
+        
         user_audio_directory = os.path.join(AUDIO_DIRECTORY, str(current_user.id))
         os.makedirs(user_audio_directory, exist_ok=True)
-
-        # Проверка уникальности имени файла в директории пользователя
+        
         unique_filename = user_filename
         counter = 1
         while os.path.exists(os.path.join(user_audio_directory, f'{unique_filename}.mp3')):
             unique_filename = f'{user_filename}_{counter}'
             counter += 1
-
-        # Использование временного каталога для обработки видео
+       
         with tempfile.TemporaryDirectory() as temp_dir:
             video_path = os.path.join(temp_dir, 'input.mp4')
             video_file.save(video_path)
-
-            # Обрезаем видео с использованием moviepy
+            
             video = VideoFileClip(video_path).subclip(start_time, end_time)
-
-            # Сохраняем файл в директорию пользователя
+            
             output_path = os.path.join(user_audio_directory, f'{unique_filename}.mp3')
-            video.audio.write_audiofile(output_path, codec='mp3')
-
-            # Сохраняем информацию о файле в базе данных и привязываем к пользователю
+            video.audio.write_audiofile(output_path, codec='mp3', fps=44100)
+            
             audio_file = AudioFile(filename=f'{unique_filename}.mp3', path=output_path, user=current_user)
             db.session.add(audio_file)
             db.session.commit()
