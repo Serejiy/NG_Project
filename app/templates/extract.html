@@ -10,8 +10,8 @@
 <body>
     <a id="backToHomeBtn" href="/logged_index" class="button-link">Back to Home</a>
     <div id="videoContainer">
-        <label class="label" for="videoInput">
-            <input type="file" id="videoInput" accept="video/*">
+        <class="label" for="videoInput">
+            <input type="file" id="videoInput" accept="video/*" aria-label="Choose a video file">
         </label>
         
         <video id="cropperVideo" width="400" controls></video>
@@ -87,10 +87,9 @@
             var startTime = slider.noUiSlider.get()[0];
             var endTime = slider.noUiSlider.get()[1];
             
-            // Получаем значение введенного пользователем имени файла
+
             var userFilename = document.getElementById('filenameInput').value;
-        
-            // Передаем имя файла вместе с другими данными
+            
             await cropVideo(startTime, endTime, videoInput.files[0], userFilename);
         });
         
@@ -100,7 +99,7 @@
             formData.append('end_time', endTime);
             formData.append('video', videoFile);
             
-            // Добавляем имя файла в FormData
+            
             formData.append('filename', userFilename);
         
             try {
@@ -115,7 +114,7 @@
         
                     downloadLink.href = objectURL;
         
-                    // Используем введенное пользователем имя файла
+                    
                     downloadLink.download = userFilename + '.mp3';
         
                     downloadLink.style.display = 'inline';
@@ -140,7 +139,6 @@
                 });
         
                 if (response.ok) {
-                    // Обработка успешного ответа (если необходимо)
                     console.log('Audio saved to the profile successfully.');
                 } else {
                     console.error('Server response was not OK:', response);
