@@ -23,6 +23,7 @@
 </head>
 <body>
     <h1>Listening to {{ filename }}</h1>
+    <p>Share this link: {{ url_for('listen_audio',user_id=current_user.id, filename=filename, _external=True) }}</p>
     <audio controls>
         <source src="{{ url_for('serve_audio', user_id=user_id, filename=filename) }}" type="audio/mp3">
         
