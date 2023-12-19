@@ -1,0 +1,9 @@
+version: 3.0
+services:
+  - name: web
+    image: "python:3.9"
+    env:
+      - key: PORT
+        value: "5000"
+    buildScript: "pip install -r requirements.txt"
+    startScript: "python run.py"
