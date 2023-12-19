@@ -1,7 +1,7 @@
 version: 3.0
 services:
   - name: web
-    image: "python:3.9"
+    image: "python:3.12"
     env:
       - key: PORT
         value: "5000"
