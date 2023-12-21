@@ -1,20 +1,21 @@
-# Use an official Python runtime as a parent image
+# Используйте официальный образ Python
 FROM python:3.12
 
-# Set the working directory to /app
-WORKDIR /app
+# Устанавливаем рабочую директорию в /Project
+WORKDIR /Project
 
-# Copy the current directory contents into the container at /app
-COPY . /app/
+# Копируем зависимости и устанавливаем их
+COPY requirements.txt requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Install any needed packages specified in requirements.txt
-RUN python -m venv /opt/venv && . /opt/venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt
+# Копируем содержимое текущей директории в контейнер в /Project
+COPY . /Project
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+# Указываем порт, который будет использоваться приложением
+EXPOSE 5000
 
-# Define environment variable
-ENV NAME World
+# Команда, которая будет выполнена при запуске контейнера
+CMD ["uvicorn", "run:app", "--host", "0.0.0.0", "--port", "5000"]
 
-# Run app.py when the container launches
-CMD ["python", "run.py"]
+
