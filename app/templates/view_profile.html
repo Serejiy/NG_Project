@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='profile_style.css') }}">
+</head>
+
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>{{ user.username }}</h1>
+        </div>
+        <div class="profile-content">
+            <h2>{{ user.username }}'s Audio Files</h2>
+            <ul>
+                {% for audio_file in audio_files %}
+                    <li>
+                        {{ audio_file.filename }}
+                        - <a href="{{ url_for('listen_audio', user_id=user.id, filename=audio_file.filename) }}">Listen</a>
+                        - <button class="share-btn" data-url="http://127.0.0.1:5000{{ url_for('listen_audio', user_id=user.id, filename=audio_file.filename) }}">Share</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const shareButtons = document.querySelectorAll('.share-btn');
+
+        shareButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                const audioUrl = this.getAttribute('data-url');
+                copyToClipboard(audioUrl);
+                alert('Link copied to clipboard: ' + audioUrl);
+            });
+        });
+
+        function copyToClipboard(text) {
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+        }
+    });
+    </script>
+</body>
+
+</html>

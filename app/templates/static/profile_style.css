@@ -9,7 +9,7 @@ body {
 }
 
 .profile-container {
-    max-width: 800px; /* Увеличил максимальную ширину для лучшего отображения */
+    max-width: 800px;
     margin: 0 auto;
     padding: 40px;
     background-color: #282828;
@@ -23,18 +23,18 @@ body {
 }
 
 .profile-header img {
-    width: 150px; /* Увеличил размер изображения для лучшего отображения */
+    width: 150px;
     height: 150px;
     border-radius: 50%;
     margin-bottom: 20px;
 }
 
 .profile-header h1 {
-    font-size: 28px; /* Увеличил размер шрифта заголовка */
+    font-size: 28px;
 }
 
 .profile-content h2 {
-    font-size: 20px; /* Увеличил размер шрифта подзаголовка */
+    font-size: 20px;
     margin-bottom: 20px;
 }
 
@@ -45,9 +45,23 @@ body {
 
 .profile-content li {
     background-color: #333;
-    padding: 20px; /* Увеличил внутренний отступ для лучшего отображения */
+    padding: 20px;
     margin-bottom: 20px;
     border-radius: 5px;
+}
+
+/* Стили для кнопки Share */
+.profile-content .share-btn {
+    background-color: transparent;
+    border: none;
+    color: #3498db;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.profile-content .share-btn:hover {
+    text-decoration: none;
 }
 
 .profile-footer a {
@@ -59,3 +73,4 @@ body {
 .profile-footer a:hover {
     text-decoration: underline;
 }
+

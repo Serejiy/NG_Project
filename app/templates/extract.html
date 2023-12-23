@@ -10,7 +10,7 @@
 <body>
     <a id="backToHomeBtn" href="/logged_index" class="button-link">Back to Home</a>
     <div id="videoContainer">
-        <class="label" for="videoInput">
+        <label class="label" for="videoInput">
             <input type="file" id="videoInput" accept="video/*" aria-label="Choose a video file">
         </label>
         
@@ -21,7 +21,7 @@
         <div id="buttonContainer">
             
             <label class="label" for="filenameInput">
-                <input type="text" id="filenameInput" placeholder="Enter output file name">
+                <input type="text" id="filenameInput" name="filename" placeholder="Enter output file name">
             </label>
             
             <button id="cropBtn">Crop Video</button>
@@ -86,11 +86,17 @@
         cropBtn.addEventListener('click', async function () {
             var startTime = slider.noUiSlider.get()[0];
             var endTime = slider.noUiSlider.get()[1];
-            
-
             var userFilename = document.getElementById('filenameInput').value;
-            
+        
             await cropVideo(startTime, endTime, videoInput.files[0], userFilename);
+        });
+        
+        saveToProfileBtn.addEventListener('click', async function () {
+            var startTime = slider.noUiSlider.get()[0];
+            var endTime = slider.noUiSlider.get()[1];
+            var videoFile = videoInput.files[0];
+        
+            await saveToProfile(startTime, endTime, videoFile);
         });
         
         async function cropVideo(startTime, endTime, videoFile, userFilename) {
@@ -98,9 +104,8 @@
             formData.append('start_time', startTime);
             formData.append('end_time', endTime);
             formData.append('video', videoFile);
-            
-            
             formData.append('filename', userFilename);
+            formData.append('action', 'download');
         
             try {
                 var response = await fetch('/crop', {
@@ -113,10 +118,7 @@
                     var objectURL = URL.createObjectURL(blob);
         
                     downloadLink.href = objectURL;
-        
-                    
                     downloadLink.download = userFilename + '.mp3';
-        
                     downloadLink.style.display = 'inline';
                 } else {
                     console.error('Server response was not OK:', response);
@@ -131,6 +133,7 @@
             formData.append('start_time', startTime);
             formData.append('end_time', endTime);
             formData.append('video', videoFile);
+            formData.append('action', 'save_to_profile');
         
             try {
                 var response = await fetch('/crop', {
@@ -153,6 +156,7 @@
             date.setSeconds(seconds);
             return date.toISOString().substr(11, 8);
         }
+        
     </script>
 </body>
 </html>
