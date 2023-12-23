@@ -1,3 +1,3 @@
-Проект "Извлечение аудио из видео и сохранение на аккаунт"
-Описание проекта
-Этот проект представляет собой инструмент для извлечения аудио из видеофайлов и последующего сохранения полученных аудиофайлов на ваш аккаунт. Проект может быть полезен, например, для извлечения звуковых дорожек из видеороликов для дальнейшего анализа или обработки.
+Project "Audio Extraction from Video and Storage on Account"
+Project Description
+This project is a tool for extracting audio from video files and subsequently saving the obtained audio files to your account. The project can be useful, for example, for extracting audio tracks from video clips for further analysis or processing.
